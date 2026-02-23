@@ -61,7 +61,7 @@
 </script>
 
 <!-- Floating Premium Navigation -->
-<nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl">
+<nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl">
     <div
         class="glass-card rounded-full px-8 py-4 grid grid-cols-2 md:grid-cols-3 items-center border-white/20"
     >
@@ -83,7 +83,7 @@
 
         <!-- Desktop Navigation Items (Centered with Equal Gaps) -->
         <div class="hidden md:flex items-center justify-center gap-12">
-            {#each ["about", "experience", "achievements"] as item}
+            {#each ["projects", "about", "experience", "achievements"] as item}
                 <button
                     onclick={() => scrollTo(item)}
                     class="nav-link text-[11px] whitespace-nowrap"
@@ -141,7 +141,7 @@
     <div
         class="fixed inset-0 z-40 bg-white/95 dark:bg-black/95 backdrop-blur-xl pt-32 px-10 md:hidden flex flex-col items-center gap-10"
     >
-        {#each ["about", "experience", "skills", "achievements"] as item}
+        {#each ["projects", "about", "experience", "achievements"] as item}
             <button
                 onclick={() => scrollTo(item)}
                 class="text-3xl font-black tracking-tighter uppercase"
@@ -340,6 +340,84 @@
         </div>
     </section>
 
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="max-w-7xl mx-auto px-6 mb-40">
+        <div
+            class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4"
+        >
+            <div>
+                <h2
+                    class="text-xs font-black uppercase tracking-[0.5em] text-neutral-400 mb-4"
+                >
+                    {t.sections.projects}
+                </h2>
+                <h3
+                    class="text-5xl md:text-6xl font-black tracking-tighter dark:text-white uppercase"
+                >
+                    Digital <span class="heading-gradient">Creations</span>
+                </h3>
+            </div>
+            <div class="flex gap-2">
+                <div
+                    class="w-12 h-12 rounded-full border border-neutral-200 dark:border-white/10 flex items-center justify-center opacity-30 cursor-not-allowed"
+                >
+                    <ArrowUpRight size={20} class="rotate-180" />
+                </div>
+                <div
+                    class="w-12 h-12 rounded-full border border-neutral-200 dark:border-white/10 flex items-center justify-center hover:bg-neutral-900 dark:hover:bg-white hover:text-white dark:hover:text-black transition-colors cursor-pointer"
+                >
+                    <ArrowUpRight size={20} />
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {#each t.projectList as project}
+                <div
+                    class="group relative bg-neutral-50 dark:bg-white/5 rounded-[3rem] overflow-hidden border border-black/5 dark:border-white/5 p-4 transition-all hover:shadow-2xl hover:shadow-indigo-500/10"
+                >
+                    <div
+                        class="aspect-video rounded-[2.2rem] overflow-hidden relative mb-6"
+                    >
+                        <img
+                            src={project.image}
+                            alt={project.title}
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8"
+                        >
+                            <button
+                                class="px-6 py-3 rounded-full bg-white text-black font-black text-xs uppercase tracking-widest"
+                                >{t.actions.viewProject}</button
+                            >
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            {#each project.tech as tech}
+                                <span
+                                    class="text-[9px] font-black uppercase tracking-widest text-indigo-500 bg-indigo-500/10 px-3 py-1 rounded-full"
+                                    >{tech}</span
+                                >
+                            {/each}
+                        </div>
+                        <h4
+                            class="text-3xl font-black tracking-tighter dark:text-white mb-2 uppercase"
+                        >
+                            {project.title}
+                        </h4>
+                        <p
+                            class="text-neutral-500 dark:text-neutral-400 font-medium leading-relaxed mb-6"
+                        >
+                            {project.desc}
+                        </p>
+                    </div>
+                </div>
+            {/each}
+        </div>
+    </section>
+
     <!-- EXPERIENCE SECTION: Interactive Timeline -->
     <section id="experience" class="max-w-7xl mx-auto px-6 mb-32">
         <div
@@ -371,8 +449,19 @@
                         class="absolute inset-0 bg-gradient-to-r from-indigo-500/0 via-indigo-500/0 to-indigo-500/[0.02] opacity-0 group-hover:opacity-100 transition-opacity"
                     ></div>
                     <div
-                        class="flex flex-col lg:flex-row gap-10 items-start relative z-10"
+                        class="flex flex-col lg:flex-row gap-10 items-center relative z-10"
                     >
+                        <!-- Experience Image Placeholder -->
+                        <div
+                            class="w-full lg:w-48 aspect-video rounded-2xl overflow-hidden bg-neutral-200 dark:bg-white/10 shrink-0"
+                        >
+                            <img
+                                src={exp.image}
+                                alt={exp.role}
+                                class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
+                            />
+                        </div>
+
                         <div class="lg:w-1/4">
                             <p
                                 class="text-xs font-black uppercase tracking-widest text-neutral-400 font-mono mb-2"
@@ -426,14 +515,25 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {#each t.achievementList as item}
                 <div
-                    class="p-8 rounded-[2.5rem] bg-neutral-50 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-indigo-500/30 transition-all flex flex-col justify-between h-[280px] group"
+                    class="group relative p-4 rounded-[3rem] bg-neutral-50 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-indigo-500/30 transition-all flex flex-col h-[420px]"
                 >
+                    <!-- Achievement Image Placeholder -->
                     <div
-                        class="w-10 h-10 rounded-xl bg-neutral-200 dark:bg-white/10 flex items-center justify-center group-hover:bg-indigo-500 group-hover:text-white transition-all"
+                        class="aspect-square rounded-[2.2rem] overflow-hidden mb-6 bg-neutral-200 dark:bg-white/10 relative"
                     >
-                        <Award size={20} />
+                        <img
+                            src={item.image}
+                            alt={item.title}
+                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                        />
+                        <div
+                            class="absolute top-4 right-4 w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center text-white border border-white/10"
+                        >
+                            <Award size={20} />
+                        </div>
                     </div>
-                    <div>
+
+                    <div class="px-4">
                         <p
                             class="text-xl font-black tracking-tight dark:text-white uppercase leading-tight mb-3"
                         >
