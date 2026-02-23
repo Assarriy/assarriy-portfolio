@@ -1,42 +1,31 @@
-# sv
+# Portfolio Website (Svelte 5 + Tailwind)
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+This is a modern portfolio website featuring a Bento Grid layout, bilingual support (ID/EN), and Dark Mode.
 
-## Creating a project
+## Tech Stack
+- **Framework:** Svelte 5 (Runes)
+- **Styling:** Tailwind CSS
+- **Icons:** Lucide Svelte
+- **Build Tool:** Vite
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Setup
 
-```sh
-# create a new project
-npx sv create my-app
-```
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-To recreate this project with the same configuration:
+2. Run development server:
+   ```bash
+   npm run dev
+   ```
 
-```sh
-# recreate this project
-npx sv create --template minimal --types ts --install npm portfolio-web
-```
+3. Build for production:
+   ```bash
+   npm run build
+   ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## Customization
+- **Content/Translations:** Edit `src/lib/i18n.svelte.ts`
+- **Theme Logic:** `src/lib/theme.svelte.ts`
+- **Layout:** `src/routes/+page.svelte`
