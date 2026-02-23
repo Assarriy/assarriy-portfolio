@@ -1,15 +1,23 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: 'Inter', 'Outfit', system-ui, sans-serif;
-  
+
   /* Trend Palette: Deep Modern Dark */
   --color-bg-light: #ffffff;
   --color-bg-dark: #050505;
-  
-  --color-accent-primary: #6366f1; /* Indigo */
-  --color-accent-secondary: #0ea5e9; /* Sky */
-  --color-accent-tertiary: #d946ef; /* Fuchsia */
+
+  --color-accent-primary: #6366f1;
+  /* Indigo */
+  --color-accent-secondary: #0ea5e9;
+  /* Sky */
+  --color-accent-tertiary: #d946ef;
+  /* Fuchsia */
+
+  --shadow-premium: 0 0 20px rgba(99, 102, 241, 0.2);
+  --shadow-premium-hover: 0 0 30px rgba(99, 102, 241, 0.4);
 }
 
 /* Custom Utilities for TW4 */
@@ -24,7 +32,11 @@
 @utility btn-premium {
   @apply px-8 py-4 rounded-full font-bold text-sm transition-all duration-500 active:scale-95;
   @apply bg-neutral-900 text-white hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-neutral-200;
-  @apply shadow-[0_0_20px_rgba(99,102,241,0.2)] hover:shadow-[0_0_30px_rgba(99,102,241,0.4)];
+  box-shadow: var(--shadow-premium);
+
+  &:hover {
+    box-shadow: var(--shadow-premium-hover);
+  }
 }
 
 @utility btn-outline-premium {
@@ -34,10 +46,12 @@
 
 @utility nav-link {
   @apply text-xs font-bold uppercase tracking-widest text-neutral-500 hover:text-indigo-500 transition-all duration-300 relative;
+
   &::after {
     content: '';
     @apply absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-500 transition-all duration-300;
   }
+
   &:hover::after {
     @apply w-full;
   }
@@ -45,16 +59,19 @@
 
 @utility glow-border {
   @apply relative;
+
   &::after {
     content: '';
     @apply absolute inset-0 -z-10 rounded-[inherit] opacity-0 transition-opacity duration-500 blur-xl bg-gradient-to-r from-indigo-500/40 to-sky-500/40;
   }
+
   &:hover::after {
     @apply opacity-100;
   }
 }
 
-html, body {
+html,
+body {
   @apply h-full w-full scroll-smooth transition-colors duration-700;
   @apply bg-[var(--color-bg-light)] text-neutral-900;
   @apply dark:bg-[var(--color-bg-dark)] dark:text-neutral-100;

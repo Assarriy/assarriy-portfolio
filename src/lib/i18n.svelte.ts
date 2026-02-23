@@ -27,7 +27,7 @@ const translations = {
             viewProject: "View Project",
             readMore: "Learn More",
             downloadCV: "Download CV",
-            contact: "Contact Me"
+            contact: "Send Message"
         },
         about: {
             text: "Dedicated Software Engineering student with a passion for building impactful digital solutions. With a strong foundation in Web Development, Android, and IoT/Robotics, I combine technical expertise with proven leadership experience as a two-term ISSC President. I thrive on solving real-world problems and sharing knowledge through technical mentoring."
@@ -68,6 +68,7 @@ const translations = {
         ],
         contact: {
             email: "wibowoassariy23@gmail.com",
+            whatsapp: "6281249781394",
             linkedin: "linkedin.com/in/wibowo-assariy/",
             location: "Majalengka, West Java, ID"
         }
@@ -99,7 +100,7 @@ const translations = {
             viewProject: "Lihat Proyek",
             readMore: "Selengkapnya",
             downloadCV: "Unduh CV",
-            contact: "Hubungi Saya"
+            contact: "Kirim Pesan"
         },
         about: {
             text: "Siswa Rekayasa Perangkat Lunak yang berdedikasi dengan semangat untuk membangun solusi digital yang berdampak. Dengan fondasi yang kuat di Pengembangan Web, Android, dan IoT/Robotik, saya menggabungkan keahlian teknis dengan pengalaman kepemimpinan sebagai Presiden ISSC dua periode. Saya senang memecahkan masalah dunia nyata dan berbagi pengetahuan melalui pembimbingan teknis."
@@ -140,6 +141,7 @@ const translations = {
         ],
         contact: {
             email: "wibowoassariy23@gmail.com",
+            whatsapp: "6281249781394",
             linkedin: "linkedin.com/in/wibowo-assariy/",
             location: "Majalengka, Jawa Barat, ID"
         }

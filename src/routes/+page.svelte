@@ -27,6 +27,7 @@
         X,
         ArrowUpRight,
         Zap,
+        MessageCircle,
     } from "lucide-svelte";
 
     onMount(() => {
@@ -62,59 +63,73 @@
 <!-- Floating Premium Navigation -->
 <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl">
     <div
-        class="glass-card rounded-full px-6 py-3 flex items-center justify-between border-white/10"
+        class="glass-card rounded-full px-8 py-4 grid grid-cols-2 md:grid-cols-3 items-center border-white/20"
     >
+        <!-- Logo Section -->
         <button
-            class="flex items-center gap-2 group outline-none"
+            class="flex items-center gap-2 group outline-none justify-self-start"
             onclick={() => scrollTo("hero")}
         >
             <div
-                class="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white group-hover:rotate-12 transition-transform"
+                class="w-10 h-10 rounded-full bg-neutral-900 dark:bg-white flex items-center justify-center text-white dark:text-black group-hover:scale-110 transition-transform"
             >
-                <Zap size={16} fill="white" />
+                <Zap size={18} fill="currentColor" />
             </div>
             <span
-                class="font-extrabold text-sm tracking-tighter dark:text-white"
+                class="font-black text-lg tracking-tighter dark:text-white uppercase"
                 >WIBOWO.</span
             >
         </button>
 
-        <!-- Desktop Navigation Items -->
-        <div class="hidden md:flex items-center gap-8">
-            {#each ["about", "experience", "skills", "achievements"] as item}
-                <button onclick={() => scrollTo(item)} class="nav-link"
+        <!-- Desktop Navigation Items (Centered with Equal Gaps) -->
+        <div class="hidden md:flex items-center justify-center gap-12">
+            {#each ["about", "experience", "achievements"] as item}
+                <button
+                    onclick={() => scrollTo(item)}
+                    class="nav-link text-[11px] whitespace-nowrap"
                     >{t.nav[item]}</button
                 >
             {/each}
         </div>
 
-        <div class="flex items-center gap-2">
-            <button
-                onclick={() => i18n.toggle()}
-                class="hidden sm:block text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full border border-neutral-200 dark:border-white/10 hover:bg-neutral-50 dark:hover:bg-white/5 transition-colors"
-                aria-label="Toggle Language"
+        <!-- Controls Section -->
+        <div class="flex items-center justify-end gap-4">
+            <div
+                class="hidden sm:flex items-center gap-1 p-1 bg-black/5 dark:bg-white/5 rounded-full border border-black/5 dark:border-white/10"
             >
-                {i18n.current.toUpperCase()}
-            </button>
+                <button
+                    onclick={() => i18n.toggle()}
+                    class="text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full hover:bg-white dark:hover:bg-white/10 transition-colors dark:text-neutral-400 dark:hover:text-white"
+                >
+                    {i18n.current.toUpperCase()}
+                </button>
+                <div class="w-px h-4 bg-black/10 dark:bg-white/10"></div>
+                <button
+                    onclick={() => theme.toggle()}
+                    class="p-2 rounded-full hover:bg-white dark:hover:bg-white/10 transition-all group"
+                    aria-label="Toggle Theme"
+                >
+                    {#if theme.isDark}
+                        <Sun
+                            size={18}
+                            class="text-neutral-400 group-hover:text-orange-400 transition-colors"
+                        />
+                    {:else}
+                        <Moon
+                            size={18}
+                            class="text-neutral-500 group-hover:text-indigo-500 transition-colors"
+                        />
+                    {/if}
+                </button>
+            </div>
             <button
-                onclick={() => theme.toggle()}
-                class="p-2 rounded-full border border-neutral-200 dark:border-white/10 hover:bg-neutral-50 dark:hover:bg-white/5 transition-all"
-                aria-label="Toggle Theme"
-            >
-                {#if theme.isDark}
-                    <Sun size={18} class="text-orange-400" />
-                {:else}
-                    <Moon size={18} class="text-indigo-500" />
-                {/if}
-            </button>
-            <button
-                class="md:hidden p-2"
+                class="md:hidden p-2 text-neutral-500 hover:text-indigo-500 transition-colors"
                 onclick={() => (isMenuOpen = !isMenuOpen)}
             >
                 {#if isMenuOpen}
-                    <X size={20} />
+                    <X size={24} />
                 {:else}
-                    <Menu size={20} />
+                    <Menu size={24} />
                 {/if}
             </button>
         </div>
@@ -455,10 +470,12 @@
                 </h2>
                 <div class="flex flex-wrap justify-center gap-6">
                     <a
-                        href="mailto:{t.contact.email}"
+                        href="https://wa.me/{t.contact.whatsapp}"
+                        target="_blank"
                         class="px-10 py-5 rounded-full bg-white text-black font-black text-sm hover:scale-105 active:scale-95 transition-all flex items-center gap-3"
                     >
-                        SAY HELLO <Mail size={18} />
+                        {t.actions.contact.toUpperCase()}
+                        <MessageCircle size={18} />
                     </a>
                     <div class="flex gap-4">
                         <a

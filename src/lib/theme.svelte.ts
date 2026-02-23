@@ -2,8 +2,10 @@ class Theme {
     isDark = $state(false);
 
     toggle() {
-        this.isDark = !this.isDark;
-        this.apply();
+        if (typeof document !== 'undefined') {
+            this.isDark = !this.isDark;
+            this.apply();
+        }
     }
 
     init() {
