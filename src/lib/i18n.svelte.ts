@@ -6,47 +6,71 @@ const translations = {
             experience: "Experience",
             achievements: "Achievements",
             about: "About Me",
-            home: "Home"
+            home: "Home",
+            theme: "Theme",
+            language: "Language"
         },
         hero: {
             greeting: "Hi, I'm",
-            role: "Software Engineer & Creative Developer",
-            description: "Building digital experiences with passion and precision."
+            name: "Mochammad Wibowo Assariy",
+            role: "Software Engineer | IoT Specialist | Leader",
+            description: "Building digital solutions with passion. Software Engineering student focused on Web, Android, and IoT."
         },
         sections: {
             projects: "Featured Projects",
-            experience: "Work Experience",
-            achievements: "Honors & Achievements",
-            about: "About Me"
+            experience: "Experience",
+            achievements: "Achievements & Certs",
+            about: "About Me",
+            skills: "Technical Skills"
         },
         actions: {
             viewProject: "View Project",
-            readMore: "Read More",
+            readMore: "Learn More",
             downloadCV: "Download CV",
             contact: "Contact Me"
         },
         about: {
-            text: "I am a passionate developer focused on creating intuitive and dynamic user experiences. I specialize in modern web technologies and always strive for excellence in every project."
+            text: "Dedicated Software Engineering student with a passion for building impactful digital solutions. With a strong foundation in Web Development, Android, and IoT/Robotics, I combine technical expertise with proven leadership experience as a two-term ISSC President. I thrive on solving real-world problems and sharing knowledge through technical mentoring."
         },
-        // Placeholder data
         projectList: [
-            { title: "E-Commerce Platform", desc: "A full-stack e-commerce solution with real-time inventory, secure payments (Stripe), and admin dashboard.", tech: ["Next.js", "Prisma", "Tailwind"] },
-            { title: "Portfolio V2", desc: "Modern bento-grid portfolio built with Svelte 5, featuring dark mode and i18n support.", tech: ["Svelte 5", "Vite", "Tailwind 4"] },
-            { title: "Task Manager Pro", desc: "A productivity app for managing daily tasks, team collaboration, and deadline tracking.", tech: ["React", "Firebase", "Redux"] },
-            { title: "AI Image Generator", desc: "Web app that generates images from text using OpenAI DALL-E API and React.", tech: ["OpenAI", "React", "Node.js"] },
-            { title: "Weather Dashboard", desc: "Real-time weather tracking with multi-city support and interactive maps.", tech: ["Vue.js", "OpenWeather", "Chart.js"] }
+            {
+                title: "Portfolio v2",
+                desc: "Modern bento-grid portfolio built with Svelte 5 and Tailwind CSS 4.",
+                tech: ["Svelte 5", "Vite", "Tailwind 4"]
+            }
         ],
         experienceList: [
-            { role: "Senior Frontend Dev", company: "Tech Corp", period: "2023 - Present", desc: "Leading the frontend team, architecting scalable UI systems, and improving developer experience." },
-            { role: "Frontend Developer", company: "StartUp Inc", period: "2021 - 2023", desc: "Developed key features for the main product and improved performance by 40%." },
-            { role: "Junior Developer", company: "Code Studio", period: "2019 - 2021", desc: "Contributed to various client projects and learned modern development workflows." },
-            { role: "Freelance Developer", company: "Self-Employed", period: "2018 - 2019", desc: "Built personal websites and landing pages for small local businesses." }
+            {
+                role: "Volunteer Web Development Instructor",
+                company: "IDN Mengajar",
+                period: "Sept 2025",
+                desc: "Mentored 30+ students in mastering Frontend Web Development using HTML5 and CSS3. Guided participants to build and deploy their first responsive personal landing pages."
+            },
+            {
+                role: "IoT & Robotics Trainer",
+                company: "Intensive Program",
+                period: "Dec 2023",
+                desc: "Architected and delivered an intensive 1-week curriculum for 20+ students. Hands-on workshops with ESP32, ESP8266, and Micro:bit."
+            },
+            {
+                role: "President of ISSC (Student Council)",
+                company: "Leadership",
+                period: "Mar 2022 - Present",
+                desc: "Leading and managing diverse teams to foster collaboration and achieve organizational milestones. Multiple terms of leadership."
+            }
         ],
         achievementList: [
-            { title: "Best UI Design", event: "Hackathon 2023", desc: "Awarded for most innovative and user-friendly design." },
-            { title: "Open Source Contributor", event: "GitHub", desc: "Recognized for significant contributions to major frameworks." },
-            { title: "Certified Cloud Practitioner", event: "AWS", desc: "Validated knowledge in cloud computing and infrastructure." }
-        ]
+            { title: "Excellent Team Award", event: "KRON International Robotic Competition 2023" },
+            { title: "3rd Place", event: "National Game Dev Competition (Scratch Olympiad) 2023" },
+            { title: "Best IT Graduate", event: "IDN Boarding School Solo Junior High School" },
+            { title: "Android App Development", event: "Dicoding Indonesia" },
+            { title: "Basic Web Programming", event: "Dicoding Indonesia" }
+        ],
+        contact: {
+            email: "wibowoassariy23@gmail.com",
+            linkedin: "linkedin.com/in/wibowo-assariy/",
+            location: "Majalengka, West Java, ID"
+        }
     },
     id: {
         nav: {
@@ -60,42 +84,65 @@ const translations = {
         },
         hero: {
             greeting: "Halo, saya",
-            role: "Software Engineer & Creative Developer",
-            description: "Membangun pengalaman digital dengan semangat dan presisi."
+            name: "Mochammad Wibowo Assariy",
+            role: "Software Engineer | IoT Specialist | Leader",
+            description: "Membangun solusi digital dengan semangat. Siswa RPL dengan fokus pada Web, Android, dan IoT."
         },
         sections: {
             projects: "Proyek Unggulan",
-            experience: "Pengalaman Kerja",
-            achievements: "Penghargaan & Pencapaian",
-            about: "Tentang Saya"
+            experience: "Pengalaman",
+            achievements: "Penghargaan & Sertifikasi",
+            about: "Tentang Saya",
+            skills: "Keahlian Teknis"
         },
         actions: {
             viewProject: "Lihat Proyek",
-            readMore: "Baca Selengkapnya",
+            readMore: "Selengkapnya",
             downloadCV: "Unduh CV",
             contact: "Hubungi Saya"
         },
         about: {
-            text: "Saya adalah pengembang yang bersemangat fokus pada menciptakan pengalaman pengguna yang intuitif dan dinamis. Saya berspesialisasi dalam teknologi web modern dan selalu berusaha untuk keunggulan dalam setiap proyek."
+            text: "Siswa Rekayasa Perangkat Lunak yang berdedikasi dengan semangat untuk membangun solusi digital yang berdampak. Dengan fondasi yang kuat di Pengembangan Web, Android, dan IoT/Robotik, saya menggabungkan keahlian teknis dengan pengalaman kepemimpinan sebagai Presiden ISSC dua periode. Saya senang memecahkan masalah dunia nyata dan berbagi pengetahuan melalui pembimbingan teknis."
         },
         projectList: [
-            { title: "Platform E-Commerce", desc: "Solusi e-commerce full-stack dengan inventaris real-time, pembayaran aman (Stripe), dan dashboard admin.", tech: ["Next.js", "Prisma", "Tailwind"] },
-            { title: "Portfolio V2", desc: "Portfolio bento-grid modern yang dibangun dengan Svelte 5, menampilkan mode gelap dan dukungan i18n.", tech: ["Svelte 5", "Vite", "Tailwind 4"] },
-            { title: "Task Manager Pro", desc: "Aplikasi produktivitas untuk mengelola tugas harian, kolaborasi tim, dan pelacakan tenggat waktu.", tech: ["React", "Firebase", "Redux"] },
-            { title: "AI Image Generator", desc: "Aplikasi web yang menghasilkan gambar dari teks menggunakan API OpenAI DALL-E.", tech: ["OpenAI", "React", "Node.js"] },
-            { title: "Weather Dashboard", desc: "Pelacakan cuaca real-time dengan dukungan multi-kota dan peta interaktif.", tech: ["Vue.js", "OpenWeather", "Chart.js"] }
+            {
+                title: "Portfolio v2",
+                desc: "Portfolio bento-grid modern dibangun dengan Svelte 5 dan Tailwind CSS 4.",
+                tech: ["Svelte 5", "Vite", "Tailwind 4"]
+            }
         ],
         experienceList: [
-            { role: "Senior Frontend Dev", company: "Tech Corp", period: "2023 - Sekarang", desc: "Memimpin tim frontend, merancang sistem UI yang skalabel, dan meningkatkan pengalaman pengembang." },
-            { role: "Frontend Developer", company: "StartUp Inc", period: "2021 - 2023", desc: "Mengembangkan fitur kunci untuk produk utama dan meningkatkan performa sebesar 40%." },
-            { role: "Junior Developer", company: "Code Studio", period: "2019 - 2021", desc: "Berkontribusi pada berbagai proyek klien dan mempelajari alur kerja pengembangan modern." },
-            { role: "Freelance Developer", company: "Bekerja Mandiri", period: "2018 - 2019", desc: "Membangun situs web pribadi dan landing page untuk bisnis lokal kecil." }
+            {
+                role: "Volunteer Web Development Instructor",
+                company: "IDN Mengajar",
+                period: "Sept 2025",
+                desc: "Membimbing 30+ siswa dalam menguasai Frontend Web Development menggunakan HTML5 dan CSS3. Memandu peserta untuk membangun landing page pribadi."
+            },
+            {
+                role: "Pelatih IoT & Robotik",
+                company: "Program Intensif",
+                period: "Des 2023",
+                desc: "Merancang dan menyampaikan kurikulum teknis intensif selama 1 minggu untuk 20+ siswa. Workshop tangan dengan ESP32, ESP8266, dan Micro:bit."
+            },
+            {
+                role: "Presiden ISSC (Osis/Majelis)",
+                company: "Kepemimpinan",
+                period: "Mar 2022 - Sekarang",
+                desc: "Memimpin dan mengelola berbagai tim untuk memupuk kolaborasi dan mencapai target organisasi."
+            }
         ],
         achievementList: [
-            { title: "Desain UI Terbaik", event: "Hackathon 2023", desc: "Diberikan penghargaan untuk desain paling inovatif dan ramah pengguna." },
-            { title: "Kontributor Open Source", event: "GitHub", desc: "Diakui atas kontribusi signifikan pada framework utama." },
-            { title: "Certified Cloud Practitioner", event: "AWS", desc: "Pengetahuan tervalidasi dalam komputasi awan dan infrastruktur." }
-        ]
+            { title: "Excellent Team Award", event: "KRON International Robotic Competition 2023" },
+            { title: "Juara 3", event: "Lomba Game Dev Nasional (Scratch Olympiad) 2023" },
+            { title: "Lulusan IT Terbaik", event: "SMP IDN Boarding School Solo" },
+            { title: "Sertifikasi Android App Development", event: "Dicoding Indonesia" },
+            { title: "Sertifikasi Dasar Pemrograman Web", event: "Dicoding Indonesia" }
+        ],
+        contact: {
+            email: "wibowoassariy23@gmail.com",
+            linkedin: "linkedin.com/in/wibowo-assariy/",
+            location: "Majalengka, Jawa Barat, ID"
+        }
     }
 };
 

@@ -10,5 +10,3 @@
 </svelte:head>
 
 {@render children()}
-
-<!-- p -->

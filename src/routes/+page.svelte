@@ -18,370 +18,481 @@
         Code,
         Cpu,
         Quote,
+        GraduationCap,
+        Smartphone,
+        Radio,
+        HardDrive,
+        Terminal,
+        Menu,
+        X,
+        ArrowUpRight,
+        Zap,
     } from "lucide-svelte";
 
     onMount(() => {
         theme.init();
     });
 
-    // Derived state for current language translations
     let t = $derived(i18n.t);
+    let isMenuOpen = $state(false);
+
+    const skills = {
+        languages: [
+            "Svelte 5",
+            "Dart (Flutter)",
+            "Laravel",
+            "HTML5",
+            "CSS3",
+            "TS",
+            "SQL",
+        ],
+        iot: ["ESP32", "ESP8266", "Micro:bit", "Nomokit", "Robotics"],
+        tools: ["Figma", "Git", "Canva"],
+    };
+
+    function scrollTo(id: string) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.scrollIntoView({ behavior: "smooth" });
+            isMenuOpen = false;
+        }
+    }
 </script>
 
-<div
-    class="min-h-screen p-4 md:p-8 lg:p-12 flex flex-col items-center justify-center transition-colors duration-500 bg-gray-50 dark:bg-gray-950 font-sans"
->
+<!-- Floating Premium Navigation -->
+<nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl">
     <div
-        class="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 auto-rows-min md:auto-rows-[180px] gap-4"
+        class="glass-card rounded-full px-6 py-3 flex items-center justify-between border-white/10"
     >
-        <!-- 1. About / Hero Card (2x2) -->
-        <div
-            class="sm:col-span-2 sm:row-span-2 bg-white dark:bg-gray-900 rounded-3xl p-6 md:p-10 border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col justify-between group hover:border-blue-500/50 transition-all duration-300 relative overflow-hidden h-[380px] sm:h-auto"
+        <button
+            class="flex items-center gap-2 group outline-none"
+            onclick={() => scrollTo("hero")}
         >
             <div
-                class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-blue-900/10 dark:to-purple-900/10 opacity-0 group-hover:opacity-100 transition-opacity"
-            ></div>
-            <div class="relative z-10">
-                <div class="flex items-center gap-3 mb-6">
-                    <div
-                        class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-400"
-                    >
-                        <User size={20} />
-                    </div>
-                    <span
-                        class="px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-[10px] font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-700"
-                    >
-                        {t.sections.about}
-                    </span>
-                </div>
-                <h1
-                    class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-6 tracking-tight leading-tight"
+                class="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white group-hover:rotate-12 transition-transform"
+            >
+                <Zap size={16} fill="white" />
+            </div>
+            <span
+                class="font-extrabold text-sm tracking-tighter dark:text-white"
+                >WIBOWO.</span
+            >
+        </button>
+
+        <!-- Desktop Navigation Items -->
+        <div class="hidden md:flex items-center gap-8">
+            {#each ["about", "experience", "skills", "achievements"] as item}
+                <button onclick={() => scrollTo(item)} class="nav-link"
+                    >{t.nav[item]}</button
                 >
-                    {t.hero.greeting} <br />
+            {/each}
+        </div>
+
+        <div class="flex items-center gap-2">
+            <button
+                onclick={() => i18n.toggle()}
+                class="hidden sm:block text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full border border-neutral-200 dark:border-white/10 hover:bg-neutral-50 dark:hover:bg-white/5 transition-colors"
+                aria-label="Toggle Language"
+            >
+                {i18n.current.toUpperCase()}
+            </button>
+            <button
+                onclick={() => theme.toggle()}
+                class="p-2 rounded-full border border-neutral-200 dark:border-white/10 hover:bg-neutral-50 dark:hover:bg-white/5 transition-all"
+                aria-label="Toggle Theme"
+            >
+                {#if theme.isDark}
+                    <Sun size={18} class="text-orange-400" />
+                {:else}
+                    <Moon size={18} class="text-indigo-500" />
+                {/if}
+            </button>
+            <button
+                class="md:hidden p-2"
+                onclick={() => (isMenuOpen = !isMenuOpen)}
+            >
+                {#if isMenuOpen}
+                    <X size={20} />
+                {:else}
+                    <Menu size={20} />
+                {/if}
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Overlay -->
+{#if isMenuOpen}
+    <div
+        class="fixed inset-0 z-40 bg-white/95 dark:bg-black/95 backdrop-blur-xl pt-32 px-10 md:hidden flex flex-col items-center gap-10"
+    >
+        {#each ["about", "experience", "skills", "achievements"] as item}
+            <button
+                onclick={() => scrollTo(item)}
+                class="text-3xl font-black tracking-tighter uppercase"
+                >{t.nav[item]}</button
+            >
+        {/each}
+        <button
+            onclick={() => i18n.toggle()}
+            class="text-indigo-500 font-bold tracking-widest uppercase text-sm mt-4"
+        >
+            SWITCH TO {i18n.current === "en" ? "INDONESIAN" : "ENGLISH"}
+        </button>
+    </div>
+{/if}
+
+<div class="pt-32 pb-20 overflow-x-hidden">
+    <!-- HERO SECTION: The "Wow" Factor -->
+    <section id="hero" class="max-w-7xl mx-auto px-6 mb-20">
+        <div class="flex flex-col items-start gap-6">
+            <div
+                class="flex items-center gap-3 px-4 py-1.5 rounded-full border border-indigo-500/20 bg-indigo-500/5 text-indigo-500 text-[10px] font-black uppercase tracking-[0.3em] font-mono"
+            >
+                <span class="relative flex h-2 w-2">
                     <span
-                        class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400"
-                    >
-                        Wibowo
-                    </span>
-                </h1>
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"
+                    ></span>
+                    <span
+                        class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"
+                    ></span>
+                </span>
+                OPEN TO NEW OPPORTUNITIES
+            </div>
+
+            <h1
+                class="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.85] dark:text-white"
+            >
+                {t.hero.greeting} <br />
+                <span class="text-gradient drop-shadow-sm"
+                    >{t.hero.name.split(" ").slice(1, 2)}</span
+                > <br />
+                <span class="text-neutral-300 dark:text-neutral-800"
+                    >{t.hero.name.split(" ").slice(2, 3)}</span
+                >
+            </h1>
+
+            <div
+                class="flex flex-col md:flex-row md:items-center justify-between w-full mt-10 gap-10"
+            >
                 <p
-                    class="text-base md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-md"
+                    class="text-xl md:text-2xl font-medium text-neutral-500 dark:text-neutral-400 max-w-lg leading-relaxed"
                 >
-                    {t.hero.description}
+                    {t.hero.role} —
+                    <span class="dark:text-neutral-200 text-neutral-800"
+                        >Bridging hardware and software with leadership.</span
+                    >
+                </p>
+                <div class="flex gap-4">
+                    <button
+                        class="btn-premium"
+                        onclick={() => scrollTo("about")}>GET IN TOUCH</button
+                    >
+                    <button
+                        class="btn-outline-premium group"
+                        onclick={() => scrollTo("experience")}
+                    >
+                        WORKS <ArrowUpRight
+                            size={16}
+                            class="inline ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
+                        />
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BENTO GRID: Skills & Stats -->
+    <section
+        class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-6 gap-6 mb-32"
+    >
+        <!-- Big Bento Card: About Bio -->
+        <div
+            id="about"
+            class="md:col-span-4 bg-neutral-50 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-[3rem] p-10 flex flex-col justify-end min-h-[400px] relative overflow-hidden group"
+        >
+            <div
+                class="absolute top-10 right-10 w-40 h-40 bg-indigo-500/10 blur-[80px] group-hover:scale-150 transition-transform duration-1000"
+            ></div>
+            <User
+                size={120}
+                class="absolute -top-10 -left-10 opacity-5 dark:text-white rotate-12"
+            />
+            <div class="relative z-10">
+                <h3
+                    class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-6"
+                >
+                    {t.sections.about}
+                </h3>
+                <p
+                    class="text-2xl md:text-3xl font-bold dark:text-white leading-tight mb-8"
+                >
+                    {t.about.text}
+                </p>
+                <div class="flex gap-10">
+                    <div>
+                        <p
+                            class="text-xs text-neutral-400 font-bold uppercase tracking-widest mb-1"
+                        >
+                            LOCATION
+                        </p>
+                        <p class="font-bold dark:text-neutral-300">
+                            MAJALENGKA, ID
+                        </p>
+                    </div>
+                    <div>
+                        <p
+                            class="text-xs text-neutral-400 font-bold uppercase tracking-widest mb-1"
+                        >
+                            STUDENT AT
+                        </p>
+                        <p class="font-bold dark:text-neutral-300">
+                            IDN BOARDING SCHOOL
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bento Card: Skills Summary -->
+        <div
+            class="md:col-span-2 glass-card rounded-[3rem] p-10 flex flex-col justify-between border-indigo-500/10 glow-border"
+        >
+            <div
+                class="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-500"
+            >
+                <Code size={24} />
+            </div>
+            <div>
+                <h3 class="font-bold text-xl mb-4 dark:text-white">
+                    Tech Stack
+                </h3>
+                <div class="flex flex-wrap gap-2">
+                    {#each [...skills.languages.slice(0, 4), "Svelte 5", "More"] as s}
+                        <span
+                            class="px-3 py-1 rounded-full bg-neutral-100 dark:bg-white/5 text-[10px] font-black uppercase tracking-widest text-neutral-500"
+                            >{s}</span
+                        >
+                    {/each}
+                </div>
+            </div>
+        </div>
+
+        <!-- Bento Card: Leadership Focus -->
+        <div
+            class="md:col-span-2 bg-indigo-600 rounded-[3rem] p-10 flex flex-col justify-between text-white shadow-xl shadow-indigo-500/20 relative overflow-hidden"
+        >
+            <div
+                class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-[60px]"
+            ></div>
+            <div class="z-10 bg-white/20 w-fit p-3 rounded-2xl">
+                <Hash size={24} />
+            </div>
+            <div class="z-10">
+                <h3
+                    class="text-xs font-black uppercase tracking-[0.4em] mb-2 opacity-70"
+                >
+                    Leadership
+                </h3>
+                <p class="text-2xl font-black leading-none">
+                    2 TERMS<br /><span class="text-indigo-200"
+                        >ISSC PRESIDENT</span
+                    >
                 </p>
             </div>
-            <div class="flex flex-wrap gap-3 mt-8 relative z-10">
-                <button
-                    class="px-6 py-3 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold text-sm shadow-lg shadow-gray-200 dark:shadow-none hover:scale-105 active:scale-95 transition-all"
-                >
-                    {t.actions.contact}
-                </button>
-                <button
-                    class="px-6 py-3 rounded-full border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-semibold text-sm hover:bg-gray-50 dark:hover:bg-gray-800 active:scale-95 transition-all"
-                >
-                    {t.actions.downloadCV}
-                </button>
-            </div>
         </div>
 
-        <!-- 2. Theme & Language (1x1) -->
+        <!-- Bento Card: IoT Focus -->
         <div
-            class="col-span-1 row-span-1 bg-white dark:bg-gray-900 rounded-3xl p-6 flex flex-col items-center justify-center gap-4 border border-gray-200 dark:border-gray-800 shadow-sm relative overflow-hidden h-[180px]"
+            class="md:col-span-4 dark:bg-neutral-900 bg-neutral-50 border border-black/5 dark:border-white/5 rounded-[3rem] p-10 flex flex-col md:flex-row items-center gap-10"
         >
-            <!-- Top: Theme -->
-            <div class="flex items-center justify-between w-full">
-                <span
-                    class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-widest"
-                    >{t.nav.theme}</span
-                >
-                <button
-                    onclick={() => theme.toggle()}
-                    class="p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all active:scale-90 border border-transparent hover:border-orange-200 dark:hover:border-yellow-900/50"
-                    aria-label="Toggle Theme"
-                >
-                    {#if theme.isDark}
-                        <Moon
-                            size={20}
-                            class="text-yellow-400 fill-yellow-400"
-                        />
-                    {:else}
-                        <Sun size={20} class="text-orange-500" />
-                    {/if}
-                </button>
+            <div
+                class="w-24 h-24 shrink-0 rounded-[2rem] bg-teal-500/10 flex items-center justify-center text-teal-500 border border-teal-500/20"
+            >
+                <Cpu size={48} />
             </div>
-            <div class="w-full h-px bg-gray-100 dark:bg-gray-800"></div>
-            <!-- Bottom: Language -->
-            <div class="flex items-center justify-between w-full">
-                <span
-                    class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-widest"
-                    >{t.nav.language}</span
+            <div>
+                <h3
+                    class="text-xs font-black uppercase tracking-[0.4em] text-teal-500 mb-2"
                 >
-                <button
-                    onclick={() => i18n.toggle()}
-                    class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all active:scale-90 border border-transparent hover:border-blue-200 dark:hover:border-blue-900/50 flex items-center justify-center font-bold text-sm"
-                >
-                    {i18n.current.toUpperCase()}
-                </button>
+                    IoT & Hardware Specialist
+                </h3>
+                <p class="text-lg font-bold dark:text-neutral-300 leading-snug">
+                    Architected solutions using ESP32, ESP8266, and Robotics for
+                    intensive tech programs.
+                </p>
             </div>
         </div>
+    </section>
 
-        <!-- 3. Socials (1x1) -->
+    <!-- EXPERIENCE SECTION: Interactive Timeline -->
+    <section id="experience" class="max-w-7xl mx-auto px-6 mb-32">
         <div
-            class="col-span-1 row-span-1 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl p-6 flex flex-col justify-center items-center text-white relative overflow-hidden group shadow-lg shadow-indigo-200 dark:shadow-none h-[180px]"
+            class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4"
+        >
+            <div>
+                <h2
+                    class="text-xs font-black uppercase tracking-[0.5em] text-neutral-400 mb-4"
+                >
+                    {t.sections.experience}
+                </h2>
+                <h3
+                    class="text-5xl md:text-6xl font-black tracking-tighter dark:text-white"
+                >
+                    Professional <span class="heading-gradient">Evolution</span>
+                </h3>
+            </div>
+            <div
+                class="h-px flex-1 bg-neutral-100 dark:bg-white/5 mx-10 hidden lg:block"
+            ></div>
+        </div>
+
+        <div class="space-y-6">
+            {#each t.experienceList as exp}
+                <div
+                    class="group relative soft-card p-10 hover:border-indigo-500/20 glow-border overflow-hidden"
+                >
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-indigo-500/0 via-indigo-500/0 to-indigo-500/[0.02] opacity-0 group-hover:opacity-100 transition-opacity"
+                    ></div>
+                    <div
+                        class="flex flex-col lg:flex-row gap-10 items-start relative z-10"
+                    >
+                        <div class="lg:w-1/4">
+                            <p
+                                class="text-xs font-black uppercase tracking-widest text-neutral-400 font-mono mb-2"
+                            >
+                                {exp.period}
+                            </p>
+                            <div
+                                class="px-4 py-1.5 rounded-full bg-indigo-500/5 text-indigo-500 text-[9px] font-black uppercase w-fit border border-indigo-500/10"
+                            >
+                                {exp.company}
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h4
+                                class="text-3xl font-black tracking-tight mb-4 group-hover:text-indigo-500 transition-colors uppercase dark:text-white"
+                            >
+                                {exp.role}
+                            </h4>
+                            <p
+                                class="text-lg text-neutral-500 dark:text-neutral-400 font-medium leading-relaxed max-w-2xl"
+                            >
+                                {exp.desc}
+                            </p>
+                        </div>
+                        <div class="lg:w-10 flex lg:justify-end">
+                            <div
+                                class="w-10 h-10 rounded-full border border-neutral-200 dark:border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all"
+                            >
+                                <ArrowUpRight size={18} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {/each}
+        </div>
+    </section>
+
+    <!-- ACHIEVEMENTS: Horizontal High-Contrast -->
+    <section id="achievements" class="max-w-7xl mx-auto px-6 mb-32">
+        <div class="text-center mb-16">
+            <h2
+                class="text-xs font-black uppercase tracking-[0.5em] text-neutral-400 mb-4"
+            >
+                {t.sections.achievements}
+            </h2>
+            <h3 class="text-5xl font-black tracking-tighter dark:text-white">
+                Hall of Fame
+            </h3>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {#each t.achievementList as item}
+                <div
+                    class="p-8 rounded-[2.5rem] bg-neutral-50 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-indigo-500/30 transition-all flex flex-col justify-between h-[280px] group"
+                >
+                    <div
+                        class="w-10 h-10 rounded-xl bg-neutral-200 dark:bg-white/10 flex items-center justify-center group-hover:bg-indigo-500 group-hover:text-white transition-all"
+                    >
+                        <Award size={20} />
+                    </div>
+                    <div>
+                        <p
+                            class="text-xl font-black tracking-tight dark:text-white uppercase leading-tight mb-3"
+                        >
+                            {item.title}
+                        </p>
+                        <p
+                            class="text-[10px] font-black uppercase tracking-widest text-neutral-400"
+                        >
+                            {item.event}
+                        </p>
+                    </div>
+                </div>
+            {/each}
+        </div>
+    </section>
+
+    <!-- CONTACT FOOTER: Ultra Visual -->
+    <footer class="max-w-7xl mx-auto px-6 mb-10">
+        <div
+            class="dark:bg-indigo-600 bg-neutral-900 rounded-[4rem] p-12 md:p-24 text-white text-center relative overflow-hidden group"
         >
             <div
                 class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"
             ></div>
-            <div class="flex gap-4 z-10">
-                <a
-                    href="https://github.com"
-                    target="_blank"
-                    class="p-3.5 rounded-2xl bg-white/10 backdrop-blur-md hover:bg-white/20 transition-all hover:-translate-y-1 border border-white/10"
-                    ><Github size={24} /></a
-                >
-                <a
-                    href="https://linkedin.com"
-                    target="_blank"
-                    class="p-3.5 rounded-2xl bg-white/10 backdrop-blur-md hover:bg-white/20 transition-all hover:-translate-y-1 border border-white/10"
-                    ><Linkedin size={24} /></a
-                >
-            </div>
-            <p
-                class="mt-4 font-medium text-indigo-100 z-10 text-xs tracking-widest uppercase"
-            >
-                Connect
-            </p>
-        </div>
-
-        <!-- 4. Achievements (1x1) -->
-        <div
-            class="col-span-1 row-span-1 bg-yellow-50 dark:bg-yellow-900/10 rounded-3xl p-6 border border-yellow-200 dark:border-yellow-900/30 flex flex-col justify-center relative overflow-hidden group h-[180px]"
-        >
             <div
-                class="absolute top-4 right-4 text-yellow-500/20 group-hover:text-yellow-500/40 transition-colors rotate-12"
-            >
-                <Award size={64} />
-            </div>
-            <div
-                class="bg-yellow-100 dark:bg-yellow-900/30 w-10 h-10 rounded-xl flex items-center justify-center text-yellow-600 dark:text-yellow-400 mb-3 z-10"
-            >
-                <Award size={20} />
-            </div>
-            <h3
-                class="font-bold text-gray-900 dark:text-yellow-100 z-10 relative text-sm uppercase tracking-wider"
-            >
-                {t.sections.achievements}
-            </h3>
-            <div
-                class="text-xs text-gray-600 dark:text-yellow-200/70 mt-2 z-10 relative"
-            >
-                <p class="font-bold text-gray-800 dark:text-yellow-50">
-                    {t.achievementList[0].title}
-                </p>
-                <p class="mt-0.5 opacity-80">{t.achievementList[0].event}</p>
-            </div>
-        </div>
-
-        <!-- 5. Experience (1x2) -->
-        <div
-            class="col-span-1 lg:row-span-2 bg-gray-900 dark:bg-black text-white rounded-3xl p-6 border border-gray-800 flex flex-col relative overflow-hidden group shadow-xl h-[380px]"
-        >
-            <div
-                class="absolute top-0 right-0 w-32 h-32 bg-green-500/10 blur-[50px] rounded-full"
-            ></div>
-            <div class="flex items-center gap-2 text-green-400 mb-6 z-10">
-                <Briefcase size={18} />
-                <h3 class="font-bold text-[10px] uppercase tracking-[0.2em]">
-                    {t.sections.experience}
-                </h3>
-            </div>
-
-            <div
-                class="overflow-y-auto custom-scrollbar pr-2 space-y-8 z-10 flex-1 relative mb-4"
-            >
-                <div
-                    class="absolute left-[7px] top-2 bottom-4 w-0.5 bg-gray-800"
-                ></div>
-                {#each t.experienceList as exp}
-                    <div class="relative pl-6 group/exp">
-                        <div
-                            class="absolute -left-[5px] top-1.5 w-3 h-3 rounded-full bg-gray-700 border-2 border-gray-900 group-hover/exp:bg-green-500 group-hover/exp:scale-110 transition-all"
-                        ></div>
-                        <p
-                            class="text-[9px] text-gray-500 mb-0.5 font-mono uppercase tracking-wider"
-                        >
-                            {exp.period}
-                        </p>
-                        <h4
-                            class="font-bold text-sm text-green-100 group-hover/exp:text-green-400 transition-colors leading-tight"
-                        >
-                            {exp.role}
-                        </h4>
-                        <p class="text-[11px] text-gray-500 mt-0.5">
-                            {exp.company}
-                        </p>
-                        <p
-                            class="text-[10px] text-gray-400 mt-2 line-clamp-2 group-hover/exp:line-clamp-none transition-all duration-300"
-                        >
-                            {exp.desc}
-                        </p>
-                    </div>
-                {/each}
-            </div>
-            <button
-                class="w-full py-3 rounded-2xl bg-gray-800 hover:bg-gray-700 text-[10px] font-bold uppercase tracking-widest text-gray-300 transition-all active:scale-95 z-10"
-            >
-                {t.actions.readMore}
-            </button>
-        </div>
-
-        <!-- 6. Projects (2x2) -->
-        <div
-            class="sm:col-span-2 row-span-2 bg-white dark:bg-gray-900 rounded-3xl p-6 md:p-8 border border-gray-200 dark:border-gray-800 flex flex-col relative overflow-hidden group h-[380px]"
-        >
-            <div
-                class="absolute -right-10 -bottom-10 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl group-hover:bg-purple-500/10 transition-all"
+                class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-fuchsia-500/20"
             ></div>
 
-            <div class="flex justify-between items-center mb-6 z-10">
-                <div>
-                    <div
-                        class="flex items-center gap-2 text-purple-600 dark:text-purple-400 mb-2"
+            <div class="relative z-10 flex flex-col items-center">
+                <h2
+                    class="text-5xl md:text-8xl font-black tracking-tighter mb-10"
+                >
+                    LET'S START A<br />PROJECT TOGETHER
+                </h2>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <a
+                        href="mailto:{t.contact.email}"
+                        class="px-10 py-5 rounded-full bg-white text-black font-black text-sm hover:scale-105 active:scale-95 transition-all flex items-center gap-3"
                     >
-                        <Hash size={18} />
-                        <span
-                            class="text-[10px] font-bold uppercase tracking-widest"
-                            >{t.nav.projects}</span
+                        SAY HELLO <Mail size={18} />
+                    </a>
+                    <div class="flex gap-4">
+                        <a
+                            href="https://{t.contact.linkedin}"
+                            target="_blank"
+                            class="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 hover:border-white transition-all"
+                            ><Linkedin size={20} /></a
+                        >
+                        <a
+                            href="https://github.com"
+                            target="_blank"
+                            class="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 hover:border-white transition-all"
+                            ><Github size={20} /></a
                         >
                     </div>
-                    <h3
-                        class="font-bold text-2xl md:text-3xl text-gray-900 dark:text-white"
-                    >
-                        {t.sections.projects}
-                    </h3>
                 </div>
-                <a
-                    href="/projects"
-                    class="w-10 h-10 rounded-xl border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 transition-all active:scale-90"
-                >
-                    <ExternalLink
-                        size={18}
-                        class="text-gray-600 dark:text-gray-400"
-                    />
-                </a>
-            </div>
-
-            <div
-                class="overflow-y-auto custom-scrollbar pr-2 flex-1 z-10 space-y-4"
-            >
-                {#each t.projectList as project}
-                    <div
-                        class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-2xl hover:scale-[1.01] transition-transform cursor-pointer border border-transparent hover:border-purple-200 dark:hover:border-purple-900/50 group/proj flex gap-4"
-                    >
-                        <div
-                            class="w-12 h-12 shrink-0 rounded-xl bg-white dark:bg-gray-700 shadow-sm flex items-center justify-center text-purple-600 dark:text-purple-400"
-                        >
-                            <Code size={24} />
-                        </div>
-                        <div>
-                            <h4
-                                class="font-bold text-gray-900 dark:text-white mb-1"
-                            >
-                                {project.title}
-                            </h4>
-                            <p
-                                class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed line-clamp-2 group-hover/proj:line-clamp-none transition-all"
-                            >
-                                {project.desc}
-                            </p>
-                            {#if project.tech}
-                                <div class="flex flex-wrap gap-2 mt-3">
-                                    {#each project.tech as tag}
-                                        <span
-                                            class="text-[9px] font-bold px-2 py-0.5 rounded-md bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400"
-                                        >
-                                            {tag}
-                                        </span>
-                                    {/each}
-                                </div>
-                            {/if}
-                        </div>
-                    </div>
-                {/each}
             </div>
         </div>
 
-        <!-- 7. Tech Stack (1x1) -->
         <div
-            class="col-span-1 row-span-1 bg-white dark:bg-gray-900 rounded-3xl p-6 border border-gray-200 dark:border-gray-800 flex flex-col justify-center gap-4 h-[180px]"
+            class="flex flex-col md:flex-row justify-between items-center mt-20 gap-6 opacity-30 px-10"
         >
-            <div
-                class="flex items-center gap-2 text-gray-400 border-b border-gray-100 dark:border-gray-800 pb-2"
-            >
-                <Cpu size={16} />
-                <span class="text-[9px] font-bold uppercase tracking-widest"
-                    >Stack</span
-                >
-            </div>
-            <div
-                class="flex flex-wrap gap-2 overflow-y-auto custom-scrollbar max-h-24"
-            >
-                {#each ["Svelte 5", "Tailwind 4", "Vite", "TypeScript", "Node.js", "Figma", "PostgreSQL"] as tech}
-                    <span
-                        class="px-2.5 py-1.5 rounded-xl bg-gray-50 dark:bg-gray-800 text-[10px] font-bold text-gray-600 dark:text-gray-300 border border-gray-100 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 transition-colors"
-                    >
-                        {tech}
-                    </span>
-                {/each}
-            </div>
-        </div>
-
-        <!-- 8. Location (1x1) -->
-        <div
-            class="col-span-1 row-span-1 bg-blue-600 text-white rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden group h-[180px] shadow-lg shadow-blue-200 dark:shadow-none"
-        >
-            <div
-                class="absolute inset-0 bg-black/10 transition-opacity opacity-0 group-hover:opacity-100"
-            ></div>
-            <div
-                class="z-10 bg-white/20 w-fit p-2.5 rounded-xl backdrop-blur-md border border-white/20"
-            >
-                <MapPin size={20} />
-            </div>
-            <div class="z-10">
-                <p
-                    class="text-[10px] opacity-70 uppercase tracking-[0.2em] font-bold"
-                >
-                    Location
-                </p>
-                <p class="font-bold text-xl tracking-tight">Jakarta, ID</p>
-            </div>
-            <div
-                class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform"
-            >
-                <Globe size={100} />
-            </div>
-        </div>
-
-        <!-- 9. Quote (1x1) -->
-        <div
-            class="col-span-1 row-span-1 bg-gray-50 dark:bg-gray-900 text-gray-400 rounded-3xl p-6 flex flex-col justify-center items-center text-center italic relative border border-gray-200 dark:border-gray-800 h-[180px]"
-        >
-            <Quote size={20} class="text-blue-500 mb-3 opacity-50" />
-            <p class="text-[11px] leading-relaxed z-10 font-medium px-4">
-                "Simplicity is the ultimate sophistication."
+            <p class="text-[10px] font-black uppercase tracking-[0.5em]">
+                {t.hero.name} &bull; 2026
             </p>
-            <span
-                class="text-[9px] mt-3 opacity-60 uppercase not-italic font-bold tracking-[0.2em] dark:text-gray-500 text-gray-400"
-                >- da Vinci</span
-            >
+            <p class="text-[10px] font-black uppercase tracking-[0.5em]">
+                BUILT WITH SVELTE 5 & TAILWIND 4
+            </p>
         </div>
-    </div>
-
-    <footer
-        class="mt-12 text-gray-400 text-[10px] uppercase tracking-[0.3em] font-bold opacity-60"
-    >
-        &copy; {new Date().getFullYear()} Wibowo Portfolio &bull; Svelte 5 &bull;
-        Tailwind 4
     </footer>
 </div>
+
+<style>
+    :global(body) {
+        font-family: "Inter", sans-serif;
+    }
+</style>
